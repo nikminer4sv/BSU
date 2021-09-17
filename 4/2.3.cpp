@@ -19,21 +19,18 @@ int simple(int n)
 
 int main()
 {
-    int n;
-    vector<int> simples;
+    int n, x = 0, y = 0;
     cin >> n;
     for (int i = n; i <= 2 * n; i++)
     {
         if (simple(i) == 1)
         {
-            simples.push_back(i);
+            x = i;
         }
-    }
-    for (int i = 0; i < simples.size(); i++)
-    {
-        if ((simples[i + 1] - simples[i]) == 2)
+        if (x - y == 2)
         {
-            cout << "[" << simples[i] << "] [" << simples[i + 1] << "]\n";
+            cout << "[" << y << "] [" << x << "]\n";
         }
-    }   
+        y = x;
+    }  
 }
