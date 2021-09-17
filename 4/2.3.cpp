@@ -1,7 +1,4 @@
 #include <iostream>
-#include <cmath>
-#include <conio.h>
-#include <vector>
 
 using namespace std;
 
