@@ -1,0 +1,45 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main()
+{
+    unsigned short x, n, y, z;
+    unsigned char x1, x2, x3, x4, x5;
+    int bit1, bit2, bit3, bit4, bit5;
+    cout << "Vvedite chislo : \n";
+    cin >> x;
+    cout << "Kakie 3 bita pokazat'\n";
+    cin >> bit3 >> bit4 >> bit5;
+    cout << "Kakie 2 bita invertirovat''\n";
+    cin >> bit1 >> bit2;
+    n = x;
+    n = n >> bit3;
+    x1 = n & 1;
+    n = n >> (bit4 - bit3);
+    x2 = n & 1;
+    n = n >> (bit5 - bit4);
+    x3 = n & 1;
+    y = x;
+    x4 = (y >> bit1) & 1;
+    x5 = (y >> bit2) & 1;
+    if (x4 == 0)
+    {
+        z = x + pow(2, bit1);
+    } else
+    {
+        z = x - pow(2, bit1);
+    }
+    if (x5 == 0)
+    {
+        z += pow(2, bit2);
+    } else
+    {
+        z -= pow(2, bit2);
+    }
+    cout << "Bit " << bit3 << " = " << int(x1) << endl
+         << "Bit " << bit4 << " = " << int(x2) << endl
+         << "Bit " << bit5 << " = " << int(x3) << endl;
+    cout << "Invertirovannoe chislo : " << z;
+}
