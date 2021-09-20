@@ -1,17 +1,22 @@
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
-int simple(int n)
+bool simple(int n)
 {
-    for (int i = 2; i <= n/2; i++)
-    {
-        if (n % i == 0)
-        {
-            return 0;
-        }
+    bool pr;
+    double m = int(sqrt(n));
+    if (n == 1) pr =  false;
+    else if (n == 2) pr = true;
+    else if (!(n % 2)) pr = false;
+    else
+    { 
+        pr = true;
+        for (int k =3; k <= m && pr; k = k + 2)
+        if ( !(n % k)) pr = false; 
     }
-    return 1;
+    return pr;
 }
 
 int main()
