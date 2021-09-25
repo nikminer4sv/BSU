@@ -4,6 +4,22 @@
 
 using namespace std;
 
+double Gorner(int i, double x, double Result) {
+
+    if (i >= 1) {
+
+        Result = i + Result * x * x;
+        i -= 2;
+        Gorner(i, x, Result);
+
+    } else {
+
+        return Result;
+
+    }
+
+}
+
 int main() {
 
     int n;
@@ -13,23 +29,26 @@ int main() {
 
         int i = 1;
         double Operand = 0;
-        long long Result = 10;
+        double Result = 10;
         double Variable = x;
         
         do {
-            //cout << "x : " << x;
+
             Operand = i * Variable;
-            //cout << " Operand : " << Operand;
             Result += Operand;
-            //cout << " Result : " << Result;
             i += 2;
-            //cout << " i : " << i;
             Variable *= x * x;
-            //cout << " Variable : " << Variable << endl;
+
         } while (i <= (2 * n - 1));
 
-        cout << Result << endl;
+        cout << setw(9) << Result << " ";
 
+        i = 2 * n - 1;
+        Result = 0;
+
+        Result = 10 + x * Gorner(i, x, Result);
+
+        cout << setw(9) << Result << endl;
     }
 
 }
