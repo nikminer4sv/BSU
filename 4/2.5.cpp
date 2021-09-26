@@ -9,7 +9,7 @@ int main()
     int k, i = 0, y = 0;
     string ch;
     cin >> k;
-    i = k;
+    i = k - 1;
     do
     {
         int x = pow(3 , y);
