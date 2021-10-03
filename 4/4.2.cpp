@@ -1,12 +1,12 @@
 #include <iostream>
 #include <cmath>
-#include <vector>
+#include <bitset>
 
 using namespace std;
 
 int main() {
 
-	int i = 0;
+	int i = 0, j = 0;
 	long long degree = 0, number;
 	cin >> number;
 
@@ -17,7 +17,7 @@ int main() {
 
 	}
 
-	vector<int> digits;
+	char *digits = new char[255];
 
 	if (number >= 0) {
 
@@ -27,15 +27,17 @@ int main() {
 
 			if (number & degree) {
 
-				digits.push_back(1);
+				digits[j] = '1';
 
 			} else
 
-				digits.push_back(0);
+				digits[j] = '0';
 
 			i--;
+			j++;
 
 		}
+		digits[j] = '\0';
 
 	} else if (number < 0) {
 
@@ -43,21 +45,36 @@ int main() {
 
 			degree = pow(2, i);
 
-			if (abs(number) & degree) {
+			if ((abs(number) - 1) & degree) {
 
-				digits.push_back(0);
+				digits[j] = '1';
 
 			} else
 
-				digits.push_back(1);
+				digits[j] = '0';
 
 			i--;
+			j++;
 
 		}
+		digits[j] = '\0';
+
+		for (int k = 0; k < j; k++) {
+
+			if (digits[k] == '0')
+
+				digits[k] = '1';
+
+			else
+
+				digits[k] = '0';
+
+		}
+			
+			
 
 	}
 	
-	for (int i : digits)
-		cout << i;
+	cout << digits;
 
 }
