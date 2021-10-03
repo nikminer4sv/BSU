@@ -69,9 +69,7 @@ int main() {
 
 				digits[k] = '0';
 
-		}
-			
-			
+		}	
 
 	}
 	
