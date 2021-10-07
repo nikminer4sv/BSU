@@ -20,8 +20,8 @@ int main() {
             for (int j = i * 2; j < Size; j += i)
                 a[j] = false;
 
-    for (int i = 0; i < Size; i++)
-        if (a[i] && i >= N)
+    for (int i = N; i < Size; i++)
+        if (a[i])
             cout << i << " "; 
 
     cout << endl;
