@@ -25,7 +25,7 @@ int main() {
     int n;
     cin >> n;
 
-    for (float x = 1; x < (5 + 0.25); x += 0.5f) {
+    for (float x = 1; x <= 5; x += 0.5f) {
 
         int i = 1;
         double Operand = 0;
