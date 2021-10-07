@@ -5,6 +5,27 @@
 
 using namespace std;
 
+int MaximumInSquare(int a, int b, vector<vector<int>> Matrix) {
+
+    int Maximum = 0;
+    int Min = a;
+    int Max = b;
+
+    if (a >= b)
+    {
+        Min = b;
+        Max = a;
+    }
+    
+    for (int i = Min ; i <= Max; i++)
+        for (int j = Min; j <= Max; j++)
+            if (Matrix[i][j] > Maximum)  
+                Maximum = Matrix[i][j];
+
+    return Maximum;
+
+}
+
 int main(){
 
     srand(time(NULL));
@@ -30,16 +51,12 @@ int main(){
     cout << "--------------------------------------------------\n";
 
     int Maximum = 0;
-    for (int i = 1; i < Rows - 1; i++)
-        for (int j = 1; j < Cols - 1; j++)
-            if (Matrix[i][j] > Maximum)  
-                Maximum = Matrix[i][j];
 
     vector<vector<int>> AnotherMatrix(Rows, vector<int>(Cols, Maximum));
 
     for (int i = 0; i < Rows; i++) {
-
         for (int j = 0; j < Cols; j++) {
+            AnotherMatrix[i][j] = MaximumInSquare(i, j, Matrix);
             cout << AnotherMatrix[i][j] << " ";
         }
 
