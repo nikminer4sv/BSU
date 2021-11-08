@@ -20,9 +20,10 @@ int main() {
 
 		if (Array[i] == Array[i + length]) {
 
-			while (Array[i] = Array[i + length]) {
+			while (Array[i] == Array[i + length]) {
 
 				length++;
+				Size--;
 
 			}
 
