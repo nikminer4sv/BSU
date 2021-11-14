@@ -6,7 +6,7 @@ int main() {
 
     char Array[255] = {'\0'};
     int Size = 0;
-    gets(Array);
+    cin.getline(Array, 255);
 
     while (Array[Size] != '\0') 
         Size++;
@@ -29,17 +29,23 @@ int main() {
 
                     }
 
-                    for (int l = j; l < Size; l++) {
+                    //cout << Array << endl;
 
-                        Array[l] = Array[l + 1];
-
-                    }
+                    Size--;
 
                 }
 
             }
 
             if(a) {
+
+                for (int l = j; l < Size; l++) {
+
+                    Array[l] = Array[l + 1];
+
+                }
+
+                Size--;
 
                 break;
 
