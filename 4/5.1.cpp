@@ -6,7 +6,7 @@ using namespace std;
 double Function1(double x, int &Counter) {
 
     Counter = 1;
-    long long Delit = 1;
+    double Delit = 1;
     double Delim = x / 2;
     double Result = 0;
     short Sight = -1;
@@ -33,7 +33,7 @@ double Function1(double x, int &Counter) {
 void Function2(double x, double *Result2) {
 
     int Counter = 1;
-    long long Delit = 1;
+    double Delit = 1;
     double Delim = x / 2;
     short Sight = -1;
     double const p = 1e-6;
@@ -57,7 +57,7 @@ void Function2(double x, double *Result2) {
 void Function3(double x, double &Result3) {
 
     int Counter = 1;
-    long long Delit = 1;
+    double Delit = 1;
     double Delim = x / 2;
     short Sight = -1;
     double const p = 1e-6;
