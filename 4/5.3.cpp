@@ -1,84 +1,80 @@
-#include <iostream>
-#include <time.h>
+#include<iostream>
+#include<ctime>
 
 using namespace std;
 
-void Input(int* N, int* M);
-void Sort(int **, int , int );
-void Output(int **, int , int );
-
-int main() {
-
-	srand(time(NULL));
-
-	system("cls");
-
-	int Cols, Rows;
-	int **Matrix;
-
-	Input(&Rows, &Cols);
-
-	Matrix = new int*[Rows];
-
-	for (int i = 0; i < Rows; i++)
-		Matrix[i] = new int[Cols];
-
-	Sort(Matrix, Rows, Cols);
-
-	Output(Matrix, Rows, Cols);
-
-}
-
-void Input(int* Rows, int* Cols) {
-
-	cout << "Enter the number of rows and cols\n";
-
-	cin >> *Rows >> *Cols;
-
-}
-
-void Sort(int **Matrix, int Rows, int Cols) {
-
-	cout << "Matrix : \n";
-
-	for (int i = 0; i < Rows; i++) {
-
-		for (int j = 0; j < Cols; j++) {
-
-			Matrix[i][j] = rand() % 100 + 1;
-			cout << Matrix[i][j] << " ";
-
+void sort_array(int** array, int row, int column)
+{
+	int variable = 0;
+	for (int i = 0; i < column; i++)
+	{
+		for (int j = 0; j < column; j++)
+		{
+			if (array[row - 1][i] < array[row - 1][j])
+			{
+				for (int k = 0; k < row; k++)
+				{
+					variable = array[k][i];
+					array[k][i] = array[k][j];
+					array[k][j] = variable;
+				}	
+			}
 		}
+	}
+}
 
+void fill_array(int** array, int row, int column)
+{
+	for (int i = 0; i < row; i++)
+	{
+		for (int j = 0; j < column; j++)
+		{
+			array[i][j] = rand();
+		}
+	}
+}
+
+void print_array(int** array, int row, int column)
+{
+	for (int i = 0; i < row; i++)
+	{
+		for (int j = 0; j < column; j++)
+		{
+			cout << array[i][j] << '\t';
+		}
 		cout << endl;
 	}
+}
 
-	cout << endl;
+
+int main()
+{
+	int row;
+	cout << "Enter the row: ";
+	cin >> row;
+
+	int column;
+	cout << "Enter the column: ";
+	cin >> column;
+
+	int** array = new int* [row];
+
+	for (int i = 0; i < row; i++)
+	{
+		array[i] = new int[column];
+	}
+
 	
-	for (int i = 0; i < Cols; i++) {
+	fill_array(array, row, column);
+	print_array(array, row, column);
+	cout << endl;
+	sort_array(array, row, column);
+	print_array(array, row, column);
 
-		if (Matrix[Rows - 1][i] > Matrix[Rows - 2][i]) {
-
-			int temp = Matrix[Rows - 2][i];
-			Matrix[Rows - 2][i] = Matrix[Rows - 1][i];
-			Matrix[Rows - 1][i] = temp;
-
-		}
-		
+	for (int i = 0; i < row; i++)
+	{
+		delete[] array[i];
 	}
-
-}
-
-void Output(int **Matrix, int Rows, int Cols) {
-
-	cout << "After sort : \n";
-
-	for (int i = 0; i < Rows; i++) {
-
-		for (int j = 0; j < Cols; j++)
-			cout << Matrix[i][j] << " ";
-
-		cout << endl;
-	}
-
+	delete[] array;
+	return 0;
 }
