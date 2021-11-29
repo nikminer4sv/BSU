@@ -1,12 +1,13 @@
 #include <iostream>
 #include <cmath>
 #include <algorithm>
+#include <ctime>
 
 using namespace std;
 
-class Data {
+class Date {
 private:
-    unsigned short RawData;
+    unsigned short RawDate;
 
 public:
 
@@ -52,19 +53,19 @@ private:
 
     }
 
-    void ConvertToNumber(unsigned short &RawData, int* RawDataArray) {
+    void ConvertToNumber(unsigned short &RawDate, int* RawDateArray) {
 
         for (int i = 0; i < 15; i++) {
 
-            if (RawDataArray[i] == 1)
-                RawData = (RawData | 1) << 1;
+            if (RawDateArray[i] == 1)
+                RawDate = (RawDate | 1) << 1;
             else
-                RawData = RawData << 1;
+                RawDate = RawDate << 1;
 
         }
 
-        if (RawDataArray[15] == 1)
-            RawData = (RawData | 1);
+        if (RawDateArray[15] == 1)
+            RawDate = (RawDate | 1);
 
     }
 
@@ -82,43 +83,37 @@ private:
 
     }
 
-    friend ostream& operator<< (ostream &out, Data &data) {
-    
-        if (data.GetDay() < 10)
-            out << "0" << data.GetDay();
-        else 
-            out << data.GetDay();
+public:
 
-        out << ".";
+    Date() {
 
-        if  (data.GetMonth() < 10)
-            out << "0" << data.GetMonth();
-        else 
-            out << data.GetMonth();
- 
-        out << ".";
+        int Day, Month, Year;
 
-        if  (data.GetYear() < 10)
-            out << "200" << data.GetYear();
-        else 
-            out << "20" << data.GetYear();
+        time_t Now = time(0);
 
-        return out;
+        tm *ltm = localtime(&Now);
+
+        Day = ltm->tm_mday;
+        Month = 1 + ltm->tm_mon;
+        Year = ltm->tm_year - 100;
+
+        Initialization(Day, Month, Year);
 
     }
 
-public:
+    Date(int Day, int Month, int Year) {
 
-    Data() {}
+        Initialization(Day, Month, Year);
 
-    Data(int Day, int Month, int Year) {
+    }
 
-        
+    void Initialization(int Day, int Month, int Year) {
+
         if (Day < 1 || Day > 31 || 
             Month < 1 || Month > 12 || 
             Year < 0 || Year > 99) {
 
-            cout << "Invalid data";
+            cout << "Invalid Date";
             exit(1);
 
         }
@@ -131,9 +126,9 @@ public:
         RawMonth = ConvertToRaw(Month,4);
         RawYear = ConvertToRaw(Year, 7);
 
-        int *RawDataArray = MergeArrays(RawDay, 5, RawMonth, 4, RawYear, 7);
+        int *RawDateArray = MergeArrays(RawDay, 5, RawMonth, 4, RawYear, 7);
 
-        ConvertToNumber(RawData, RawDataArray);
+        ConvertToNumber(RawDate, RawDateArray);
 
     }
 
@@ -142,7 +137,7 @@ public:
         int* RawDayArray = new int[5];
 
         for (int i = 0; i < 5; i++) {
-            RawDayArray[i] = (RawData >> (i + 11)) & 1;
+            RawDayArray[i] = (RawDate >> (i + 11)) & 1;
         }
 
         return ConvertToDecimal(RawDayArray, 5);
@@ -154,7 +149,7 @@ public:
         int* RawMonthArray = new int[4];
 
         for (int i = 0; i < 4; i++) {
-            RawMonthArray[i] = (RawData >> (i + 7)) & 1;
+            RawMonthArray[i] = (RawDate >> (i + 7)) & 1;
         }
         
         return ConvertToDecimal(RawMonthArray, 4);
@@ -166,20 +161,71 @@ public:
         int* RawYearArray = new int[7];
 
         for (int i = 0; i < 7; i++) {
-            RawYearArray[i] = (RawData >> (i)) & 1;
+            RawYearArray[i] = (RawDate >> (i)) & 1;
         }
 
         return ConvertToDecimal(RawYearArray, 7);
 
     }
 
-    short int GetRawData() { return RawData; }
+    unsigned short GetRawDate() { return RawDate; }
 
+    Date operator+ (Date other) {
+        
+        int Day, Month, Year;
 
+        Day = this->GetDay();
+        Month = this->GetMonth();
+        Year = this->GetYear();
+
+        Day += other.GetDay();
+
+        if (Day > 31) {
+            Month += 1;
+            Day -= 31;
+        }
+
+        Month += other.GetMonth();
+
+        if (Month > 12) {
+            Year += 1;
+            Month -= 12;
+        }
+
+        Year += other.GetYear();
+
+        return Date(Day, Month, Year);
+
+    }
+
+    friend ostream& operator<< (ostream &out, Date Date) {
+    
+        if (Date.GetDay() < 10)
+            out << "0" << Date.GetDay();
+        else 
+            out << Date.GetDay();
+
+        out << ".";
+
+        if  (Date.GetMonth() < 10)
+            out << "0" << Date.GetMonth();
+        else 
+            out << Date.GetMonth();
+ 
+        out << ".";
+
+        if  (Date.GetYear() < 10)
+            out << "200" << Date.GetYear();
+        else 
+            out << "20" << Date.GetYear();
+
+        return out;
+
+    }
 
 };
 
-bool DataComporator(Data &a, Data &b){
+bool DateComporator(Date &a, Date &b){
 
     if (a.GetYear() == b.GetYear()) {
         if (a.GetMonth() == b.GetMonth()) {
@@ -201,7 +247,7 @@ int GetRandomInt(int min, int max) {
     return min + (rand() % static_cast<int>(max - min + 1));
 }
 
-bool SortingComporator(Data& a, Data& b) {
+bool SortingComporator(Date& a, Date& b) {
 
     if (a.GetYear() == b.GetYear()) {
 
@@ -231,7 +277,7 @@ bool SortingComporator(Data& a, Data& b) {
 
 }
 
-void CustomSort(Data *Array, int Size) {
+void CustomSort(Date *Array, int Size) {
 
     for (int i = 0; i < Size; i++) {
 
@@ -250,15 +296,15 @@ int main() {
 
     int n;
     cin >> n;
-    Data *Array = new Data[n];
+    Date *Array = new Date[n];
 
     // RANDOM INITIALIZATION START
     for (int i = 0; i < n; i++) {
 
-        Array[i] = Data(GetRandomInt(1,31), GetRandomInt(1,12), GetRandomInt(0,99));
+        Array[i] = Date(GetRandomInt(1,31), GetRandomInt(1,12), GetRandomInt(0,99));
         cout << endl;
-        cout << Array[i];
-        cout << Array[i].GetRawData();
+        cout << "[" << Array[i] << "]" << " - ";
+        cout << "[" << Array[i].GetRawDate() << "]";
 
     }
     // RANDOM INITIALIZATON END
@@ -272,7 +318,7 @@ int main() {
 
         for (int j = i + 1; j < n; j++) {
 
-            if (Array[i].GetRawData() == Array[j].GetRawData())
+            if (Array[i].GetRawDate() == Array[j].GetRawDate())
                 cout << Array[i] << endl;
 
         }
@@ -281,7 +327,7 @@ int main() {
     // REPEATING ELEMENTS END
 
     // SORTING START
-    //sort(Array, Array + n, DataComporator);
+    sort(Array, Array + n, DateComporator);
     CustomSort(Array, n);
 
     cout << endl << "Sorted Elements" << endl;
@@ -289,6 +335,6 @@ int main() {
     for (int i = 0; i < n; i++) { 
         cout << Array[i] << endl;
     }
-    // SORTING END
+    // SORTING */
 
 }
